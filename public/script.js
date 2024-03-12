@@ -91,12 +91,15 @@ function addUser(userId, userName) {
     const userDiv = document.createElement('div')
     userDiv.className = 'user'
     userDiv.id = userId
+    
     const userVote = document.createElement('div')
     userVote.className = 'user-vote'
+    
     const userNameP = document.createElement('p')
     userNameP.innerHTML = userName
-    userVote.className = 'user-name'
+    userNameP.className = 'user-name'
+    
     userDiv.append(userVote)
-    userDiv.append(userName)
+    userDiv.append(userNameP)
     usersGrid.append(userDiv)
 }
