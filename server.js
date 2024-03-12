@@ -17,17 +17,17 @@ app.get('/:room', (req, res) => {
 })
 
 io.on('connection', socket => {
-    socket.on('join-room', (roomId) => {
+    socket.on('join-room', (roomId, userName) => {
         socket.join(roomId)
 
-        socket.to(roomId).emit('user-connected', socket.id)
+        socket.to(roomId).emit('user-connected', socket.id, userName)
 
         socket.on('disconnect', () => {
             socket.to(roomId).emit('user-disconnected', socket.id)
         })
 
-        socket.on('sync', (userId, voted) => {
-            socket.to(userId).emit('sync', socket.id, voted)
+        socket.on('sync', (userId, userName, voted) => {
+            socket.to(userId).emit('sync', socket.id, userName, voted)
         })
 
         socket.on('vote', userId => {

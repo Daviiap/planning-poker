@@ -4,18 +4,15 @@ const usersGrid = document.getElementById('users-grid')
 var voted = false
 var vote = 0
 
-socket.on('connect', () => {
-    socket.emit('join-room', ROOM_ID)
-    addUser(socket.id)
+socket.on('user-connected', (userId, userName) => {
+    addUser(userId, userName)
+    const input = document.getElementById('name-input')
+
+    socket.emit('sync', userId, input.value, voted)
 })
 
-socket.on('user-connected', userId => {
-    addUser(userId)
-    socket.emit('sync', userId, voted)
-})
-
-socket.on('sync', (userId, voted) => {
-    addUser(userId)
+socket.on('sync', (userId, userName, voted) => {
+    addUser(userId, userName)
     if (voted) {
         registerVote(userId)
     }
@@ -30,13 +27,13 @@ socket.on('user-disconnected', userId => {
 
 socket.on('show-votes', () => {
     const userDiv = document.getElementById(socket.id)
-    userDiv.innerHTML = vote
+    userDiv.children[0].innerHTML = vote
     socket.emit('show-vote', socket.id, vote)
 })
 
 socket.on('show-vote', (userId, vote) => {
     const userDiv = document.getElementById(userId)
-    userDiv.innerHTML = vote
+    userDiv.children[0].innerHTML = vote
 })
 
 socket.on('register-vote', userId => {
@@ -48,7 +45,7 @@ socket.on('new-vote', () => {
     voted = false
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
-        userDiv.innerHTML = ""
+        userDiv.children[0].innerHTML = ""
         userDiv.style.backgroundColor = 'aqua'
     }
 })
@@ -64,7 +61,7 @@ function showValues() {
     socket.emit('show-votes')
     socket.emit('show-vote', socket.id, vote)
     const userDiv = document.getElementById(socket.id)
-    userDiv.innerHTML = vote
+    userDiv.children[0].innerHTML = vote
 }
 
 function newVote() {
@@ -73,9 +70,16 @@ function newVote() {
     socket.emit('new-vote')
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
-        userDiv.innerHTML = ""
+        userDiv.children[0].innerHTML = ""
         userDiv.style.backgroundColor = 'aqua'
     }
+}
+
+function join() {
+    const input = document.getElementById('name-input')
+
+    socket.emit('join-room', ROOM_ID, input.value)
+    addUser(socket.id, input.value)
 }
 
 function registerVote(userId) {
@@ -83,9 +87,16 @@ function registerVote(userId) {
     userDiv.style.backgroundColor = 'lightgreen'
 }
 
-function addUser(userId) {
+function addUser(userId, userName) {
     const userDiv = document.createElement('div')
     userDiv.className = 'user'
     userDiv.id = userId
+    const userVote = document.createElement('div')
+    userVote.className = 'user-vote'
+    const userNameP = document.createElement('p')
+    userNameP.innerHTML = userName
+    userVote.className = 'user-name'
+    userDiv.append(userVote)
+    userDiv.append(userName)
     usersGrid.append(userDiv)
 }
