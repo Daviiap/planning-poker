@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>LSD Planning Poker</title>
+</head>
+<script>
+    const ROOM_ID = "<%= roomId %>"
+</script>
+<script src="/socket.io/socket.io.js" defer></script>
+<script src="script.js" defer></script>
+<body>
+    <div id="container">
+        <div id="users-grid"></div>
+        <div id="vote-opts">
+            <button onclick="voteHandler(this)">1</button>
+            <button onclick="voteHandler(this)">2</button>
+            <button onclick="voteHandler(this)">3</button>
+            <button onclick="voteHandler(this)">5</button>
+            <button onclick="voteHandler(this)">8</button>
+            <button onclick="voteHandler(this)">13</button>
+            <button onclick="voteHandler(this)">21</button>
+            <button id="show-button" onclick="showValues()">Show Values</button>
+            <button id="new-vote-button" onclick="newVote()">New Vote</button>
+        </div>
+    </div>
+</body>
+</html>
