@@ -20,6 +20,7 @@ body {
     font-family: Verdana, sans-serif;
     font-size: 15px;
     line-height: 1.5
+    
 }
 
 #users-grid {
@@ -27,7 +28,8 @@ body {
     grid-template-columns: repeat(auto-fill, 200px);
     gap: 10px;
     grid-auto-rows: 200px;
-    border: 5px solid blue;
+    border: 5px solid #d0d0d0;
+    background-color: #f0f0f0;
 }
 
 #container {
@@ -35,16 +37,21 @@ body {
     height: 100vh;
     width: 100%;
     border: 1px solid black;
-
     grid-template-rows: 70% 20% 10%;
 }
 
 #vote-opts {
     display: flex;
-    border: 5px solid pink;
+    border: 5px solid #6c11ff;
     align-items: center;
     justify-content: space-between;
-    padding: 50px;
+    justify-self: center;
+    max-height: 110px;
+    border-radius: 25px;
+    background-color: #6200ff;
+    box-shadow: 13px 9px 108px -25px rgba(94,94,94,1);
+    padding: 10px;
+   margin-top: 40px;
 }
 
 #name-selection-div {
@@ -60,34 +67,104 @@ body {
 }
 
 button {
-    width: 60px;
-    height: 30px;
+    background-color: rgba(253, 253, 253, 0.849);
+    border-radius: 8px;
+    border-width: 0;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 5px;
+    
 }
 
+button#name-submit{
+    border: 2px solid rgb(103, 86, 255);
+
+}
+
+
 button#show-button {
+    display: flex;
     width: 90px;
     height: 50px;
+    background-color: #340086;
+    color: #f0f0f0;
+    align-items: center;
+    justify-content: center;
 }
 
 button#new-vote-button {
     width: 90px;
     height: 50px;
+    color: #340086;
+    
 }
-
+button#new-vote-button:hover {
+    width: 90px;
+    height: 50px;
+    color: white;
+    font-weight: 600;
+    background-color: rgb(79, 214, 79);
+    
+}
 button:hover {
     cursor: pointer;
+    background-color: #3f00a5;
+    color: aliceblue;
+}
+
+input#name-input{
+    font-size: 14px;
+    border-radius: 6px;
+    line-height: 1.5;
+    padding: 5px 10px;
+    transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+    border: 2px solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 36px;
+}
+
+input#name-input:hover{
+    border-color: #ccc;
+}
+
+
+input#name-input:focus{
+    border-color: #9147ff !important; 
+    background: #fff;
 }
 
 .user {
     width: 80%;
     height: 100%;
     object-fit: cover;
-    background-color: aqua;
+    background-color: #333333;
     display: flex;
+    border: 5px solid #2b98ff;
     align-items: center;
     justify-content: center;
     display: grid;
     grid-template-rows: 80% 20%;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px;
+    box-shadow: 13px 9px 108px -89px rgba(94,94,94,1);
 }
 
 .user-vote {
