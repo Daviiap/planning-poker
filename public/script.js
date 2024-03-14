@@ -3,12 +3,12 @@ const usersGrid = document.getElementById('users-grid')
 
 var voted = false
 var vote = 0
+var myName = ''
 
 socket.on('user-connected', (userId, userName) => {
     addUser(userId, userName)
     const input = document.getElementById('name-input')
-
-    socket.emit('sync', userId, input.value, voted)
+    socket.emit('sync', userId, myName, voted)
 })
 
 socket.on('sync', (userId, userName, userVoted) => {
@@ -96,9 +96,11 @@ function newVote() {
 
 function join() {
     const input = document.getElementById('name-input')
+    myName = input.value
 
     socket.emit('join-room', ROOM_ID, input.value)
     addUser(socket.id, input.value)
+
 
     document.getElementById('name-selection-div').remove()
     const container = document.getElementById('opts-container')

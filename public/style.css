@@ -129,7 +129,6 @@ button#new-vote-button:hover {
     color: white;
     font-weight: 600;
     background-color: rgb(79, 214, 79);
-
 }
 
 button:hover {
@@ -146,6 +145,7 @@ button.selected {
 
 #opts-buttons {
     display: flex;
+    margin-right: 20px;
 }
 
 .vote-opt-btn {
