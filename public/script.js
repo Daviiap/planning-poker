@@ -28,12 +28,14 @@ socket.on('user-disconnected', userId => {
 socket.on('show-votes', () => {
     const userDiv = document.getElementById(socket.id)
     userDiv.children[0].innerHTML = vote
+    userDiv.classList.remove('voted')
     socket.emit('show-vote', socket.id, vote)
 })
 
 socket.on('show-vote', (userId, vote) => {
     const userDiv = document.getElementById(userId)
     userDiv.children[0].innerHTML = vote
+    userDiv.classList.remove('voted')
 })
 
 socket.on('register-vote', userId => {
@@ -45,8 +47,8 @@ socket.on('new-vote', () => {
     voted = false
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
-        userDiv.children[0].innerHTML = ""
-        userDiv.style.backgroundColor = 'aqua'
+        userDiv.children[0].innerHTML = ''
+        userDiv.classList.remove('voted')
     }
     const optsBtns = document.getElementById('opts-buttons')
     for (let i = 0; i < optsBtns.children.length; i++) {
@@ -75,6 +77,7 @@ function showValues() {
     const userDiv = document.getElementById(socket.id)
     if (userDiv) {
         userDiv.children[0].innerHTML = vote
+        userDiv.classList.remove('voted')
     }
 }
 
@@ -84,8 +87,8 @@ function newVote() {
     socket.emit('new-vote')
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
-        userDiv.children[0].innerHTML = ""
-        userDiv.style.backgroundColor = 'aqua'
+        userDiv.children[0].innerHTML = ''
+        userDiv.classList.remove('voted')
     }
     const optsBtns = document.getElementById('opts-buttons')
     for (let i = 0; i < optsBtns.children.length; i++) {
@@ -124,7 +127,7 @@ function join() {
 function registerVote(userId) {
     const userDiv = document.getElementById(userId)
     if (userDiv) {
-        userDiv.style.backgroundColor = '#90ee90'
+        userDiv.classList.add('voted')
     }
 }
 

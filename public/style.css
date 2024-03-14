@@ -101,11 +101,6 @@ button#name-submit {
 
 }
 
-.hidden {
-    visibility: hidden;
-}
-
-
 button#show-button {
     display: flex;
     width: 90px;
@@ -184,17 +179,17 @@ input#name-input:focus {
     width: 80%;
     height: 100%;
     object-fit: cover;
-    background-color: #00ffff;
-    display: flex;
-    border: 5px solid #2b98ff;
     align-items: center;
     justify-content: center;
     display: grid;
     grid-template-rows: 80% 20%;
-    border-radius: 20px;
     padding: 10px;
     margin: 5px;
     box-shadow: 13px 9px 108px -89px rgba(94, 94, 94, 1);
+}
+
+.voted > .user-vote {
+    background-color: #3f00a5;
 }
 
 .user-vote {
@@ -203,6 +198,11 @@ input#name-input:focus {
     justify-content: center;
     font-size: 35px;
     font-weight: bold;
+    border-radius: 20px;
+    width: 100px;
+    height: 100%;
+    color: #009f9f;
+    border: 2px solid #009f9f;
 }
 
 .user-name {
@@ -210,5 +210,6 @@ input#name-input:focus {
     align-items: center;
     justify-content: center;
     font-size: 25px;
+    color: #013333;
     font-weight: bold;
 }
