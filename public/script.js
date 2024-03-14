@@ -1,13 +1,13 @@
 const socket = io('/')
 const usersGrid = document.getElementById('users-grid')
 
-var voted = false
+var ivoted = false
 var myVote = 0
 var myName = ''
 
 socket.on('user-connected', (userId, userName) => {
     addUser(userId, userName)
-    socket.emit('sync', userId, myName, voted)
+    socket.emit('sync', userId, myName, ivoted)
 })
 
 socket.on('sync', (userId, userName, userVoted) => {
@@ -42,7 +42,7 @@ socket.on('new-vote', () => {
 })
 
 function voteHandler(el) {
-    voted = true
+    ivoted = true
     myVote = el.innerHTML
     registerVote(socket.id)
     socket.emit('vote', socket.id)
@@ -71,7 +71,7 @@ function showValuesBtnHandler() {
 
 function newVote() {
     myVote = 0
-    voted = false
+    ivoted = false
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
         userDiv.children[0].innerHTML = ''
