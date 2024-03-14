@@ -2,6 +2,7 @@ const socket = io('/')
 const usersGrid = document.getElementById('users-grid')
 
 var ivoted = false
+var votesShown = false
 var myVote = 0
 var myName = ''
 
@@ -42,20 +43,23 @@ socket.on('new-vote', () => {
 })
 
 function voteHandler(el) {
-    ivoted = true
-    myVote = el.innerHTML
-    registerVote(socket.id)
-    socket.emit('vote', socket.id)
+    if (!votesShown) {
+        ivoted = true
+        myVote = el.innerHTML
+        registerVote(socket.id)
+        socket.emit('vote', socket.id)
 
-    const optsBtns = document.getElementById('opts-buttons')
-    for (let i = 0; i < optsBtns.children.length; i++) {
-        const optBtn = optsBtns.children[i]
-        optBtn.classList.remove('selected')
+        const optsBtns = document.getElementById('opts-buttons')
+        for (let i = 0; i < optsBtns.children.length; i++) {
+            const optBtn = optsBtns.children[i]
+            optBtn.classList.remove('selected')
+        }
+        el.classList.add('selected')
     }
-    el.classList.add('selected')
 }
 
 function showVote(userId, value) {
+    votesShown = true
     const userDiv = document.getElementById(userId)
     if (userDiv) {
         userDiv.children[0].innerHTML = value
@@ -72,6 +76,7 @@ function showValuesBtnHandler() {
 function newVote() {
     myVote = 0
     ivoted = false
+    votesShown = false
     for (let i = 0; i < usersGrid.children.length; i++) {
         userDiv = usersGrid.children[i]
         userDiv.children[0].innerHTML = ''
