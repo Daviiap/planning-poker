@@ -134,8 +134,27 @@ button#new-vote-button:hover {
 
 button:hover {
     cursor: pointer;
+    background-color: rgb(253, 253, 253);;
+    color: rgb(46, 47, 48);
+}
+
+button.selected {
+    cursor: pointer;
     background-color: #3f00a5;
     color: aliceblue;
+}
+
+#opts-buttons {
+    display: flex;
+}
+
+.vote-opt-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    font-size: large;
 }
 
 input#name-input {

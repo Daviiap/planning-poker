@@ -48,6 +48,11 @@ socket.on('new-vote', () => {
         userDiv.children[0].innerHTML = ""
         userDiv.style.backgroundColor = 'aqua'
     }
+    const optsBtns = document.getElementById('opts-buttons')
+    for (let i = 0; i < optsBtns.children.length; i++) {
+        const optBtn = optsBtns.children[i]
+        optBtn.classList.remove('selected')
+    }
 })
 
 function voteHandler(el) {
@@ -55,13 +60,22 @@ function voteHandler(el) {
     vote = el.innerHTML
     registerVote(socket.id)
     socket.emit('vote', socket.id)
+
+    const optsBtns = document.getElementById('opts-buttons')
+    for (let i = 0; i < optsBtns.children.length; i++) {
+        const optBtn = optsBtns.children[i]
+        optBtn.classList.remove('selected')
+    }
+    el.classList.add('selected')
 }
 
 function showValues() {
     socket.emit('show-votes')
     socket.emit('show-vote', socket.id, vote)
     const userDiv = document.getElementById(socket.id)
-    userDiv.children[0].innerHTML = vote
+    if (userDiv) {
+        userDiv.children[0].innerHTML = vote
+    }
 }
 
 function newVote() {
@@ -72,6 +86,11 @@ function newVote() {
         userDiv = usersGrid.children[i]
         userDiv.children[0].innerHTML = ""
         userDiv.style.backgroundColor = 'aqua'
+    }
+    const optsBtns = document.getElementById('opts-buttons')
+    for (let i = 0; i < optsBtns.children.length; i++) {
+        const optBtn = optsBtns.children[i]
+        optBtn.classList.remove('selected')
     }
 }
 
@@ -85,14 +104,16 @@ function join() {
     const container = document.getElementById('opts-container')
     container.innerHTML = `
     <div id="vote-opts">
-        <button onclick="voteHandler(this)">1</button>
-        <button onclick="voteHandler(this)">2</button>
-        <button onclick="voteHandler(this)">3</button>
-        <button onclick="voteHandler(this)">5</button>
-        <button onclick="voteHandler(this)">8</button>
-        <button onclick="voteHandler(this)">13</button>
-        <button onclick="voteHandler(this)">21</button>
-        <button id="show-button" onclick="showValues()">Show<br/>Values</button>
+        <div id="opts-buttons">
+            <button class="vote-opt-btn" onclick="voteHandler(this)">1</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">2</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">3</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">5</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">8</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">13</button>
+            <button class="vote-opt-btn" onclick="voteHandler(this)">21</button>
+        </div>
+        <button id="show-button" onclick="showValues()">Show<br />Values</button>
         <button id="new-vote-button" onclick="newVote()">New Vote</button>
     </div>
     `
@@ -100,7 +121,9 @@ function join() {
 
 function registerVote(userId) {
     const userDiv = document.getElementById(userId)
-    userDiv.style.backgroundColor = '#90ee90'
+    if (userDiv) {
+        userDiv.style.backgroundColor = '#90ee90'
+    }
 }
 
 function addUser(userId, userName) {
