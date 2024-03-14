@@ -11,9 +11,9 @@ socket.on('user-connected', (userId, userName) => {
     socket.emit('sync', userId, input.value, voted)
 })
 
-socket.on('sync', (userId, userName, voted) => {
+socket.on('sync', (userId, userName, userVoted) => {
     addUser(userId, userName)
-    if (voted) {
+    if (userVoted) {
         registerVote(userId)
     }
 })
@@ -80,25 +80,41 @@ function join() {
 
     socket.emit('join-room', ROOM_ID, input.value)
     addUser(socket.id, input.value)
+
+    document.getElementById('name-selection-div').remove()
+    const container = document.getElementById('opts-container')
+    container.innerHTML = `
+    <div id="vote-opts">
+        <button onclick="voteHandler(this)">1</button>
+        <button onclick="voteHandler(this)">2</button>
+        <button onclick="voteHandler(this)">3</button>
+        <button onclick="voteHandler(this)">5</button>
+        <button onclick="voteHandler(this)">8</button>
+        <button onclick="voteHandler(this)">13</button>
+        <button onclick="voteHandler(this)">21</button>
+        <button id="show-button" onclick="showValues()">Show<br/>Values</button>
+        <button id="new-vote-button" onclick="newVote()">New Vote</button>
+    </div>
+    `
 }
 
 function registerVote(userId) {
     const userDiv = document.getElementById(userId)
-    userDiv.style.backgroundColor = 'lightgreen'
+    userDiv.style.backgroundColor = '#90ee90'
 }
 
 function addUser(userId, userName) {
     const userDiv = document.createElement('div')
     userDiv.className = 'user'
     userDiv.id = userId
-    
+
     const userVote = document.createElement('div')
     userVote.className = 'user-vote'
-    
+
     const userNameP = document.createElement('p')
     userNameP.innerHTML = userName
     userNameP.className = 'user-name'
-    
+
     userDiv.append(userVote)
     userDiv.append(userNameP)
     usersGrid.append(userDiv)
